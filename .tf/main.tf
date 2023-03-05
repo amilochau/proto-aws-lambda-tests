@@ -4,7 +4,7 @@ terraform {
     region = "eu-west-3"
     key    = "terraform.tfstate"
 
-    workspace_key_prefix = "emails" # To adapt for new projects
+    workspace_key_prefix = "proto" # To adapt for new projects
   }
 
   required_providers {
