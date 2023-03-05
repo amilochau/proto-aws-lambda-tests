@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <OutputType>exe</OutputType>
+    <AWSProjectType>Lambda</AWSProjectType>
+    <AssemblyName Condition=" '$(BuildSource)' == 'AwsCmd' ">bootstrap</AssemblyName>
+
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Nullable>enable</Nullable>
+
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <PublishAot>true</PublishAot>
+    <StripSymbols>true</StripSymbols>
+
+    <AutoreleasePoolSupport>false</AutoreleasePoolSupport>
+    <DebuggerSupport>false</DebuggerSupport>
+    <EnableUnsafeBinaryFormatterSerialization>false</EnableUnsafeBinaryFormatterSerialization>
+    <EnableUnsafeUTF7Encoding>false</EnableUnsafeUTF7Encoding>
+    <EventSourceSupport>false</EventSourceSupport>
+    <HttpActivityPropagationSupport>false</HttpActivityPropagationSupport>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <MetadataUpdaterSupport>false</MetadataUpdaterSupport>
+    <UseNativeHttpHandler>true</UseNativeHttpHandler>
+    <UseSystemResourceKeys>true</UseSystemResourceKeys>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Amazon.Lambda.RuntimeSupport" Version="1.8.3" />
+    <PackageReference Include="Amazon.Lambda.Core" Version="2.1.0" />
+    <PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.3.1" />
+    <PackageReference Include="AWSSDK.Core" Version="3.7.105.10" />
+    <PackageReference Include="Milochau.Core.Aws.ApiGateway" Version="0.1.1" />
+    <PackageReference Include="Milochau.Core.Aws.DynamoDB" Version="0.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\shared\entities\Milochau.Proto.Shared.Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TrimmerRootAssembly Include="AWSSDK.Core" />
+    <RdXmlFile Include="../../rd.xml" />
+  </ItemGroup>
+
+</Project>

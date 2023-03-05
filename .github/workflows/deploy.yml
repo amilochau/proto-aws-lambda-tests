@@ -1,0 +1,43 @@
+name: Deploy
+run-name: Deploy - ${{ github.ref }}
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+
+concurrency: deploy
+
+env:
+  INFRA_WORKSPACE_DEV: dev
+  INFRA_AWS_ROLE: arn:aws:iam::266302224431:role/github-shd-role
+  INFRA_AWS_REGION: eu-west-3
+  PROJECT_CLIENT_SOLUTION: './src/proto-api/Milochau.Proto.Functions.sln'
+
+jobs:
+  deploy_dev:
+    name: Deploy (DEV)
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    environment: DEV
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build AWS Lambda functions
+        uses: amilochau/github-actions/build/lambda-functions@v3
+        with:
+          solutionPath: ${{ env.PROJECT_CLIENT_SOLUTION }}
+          
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1-node16
+        with:
+          role-to-assume: ${{ env.INFRA_AWS_ROLE }}
+          aws-region: ${{ env.INFRA_AWS_REGION }}
+
+      - name: Deploy Terraform module
+        uses: amilochau/github-actions/deploy/terraform@v3
+        with:
+          workspaceName: ${{ env.INFRA_WORKSPACE_DEV }}
