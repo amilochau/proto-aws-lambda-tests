@@ -68,6 +68,7 @@ namespace Milochau.Proto.Http.GetTests
     [JsonSerializable(typeof(IEnumerable<string>))]
     [JsonSerializable(typeof(GetTestsRequest))]
     [JsonSerializable(typeof(Test))]
+    [JsonSerializable(typeof(string))]
     //[JsonSerializable(typeof(GetItemRequest))]
     public partial class ApplicationJsonSerializerContext : JsonSerializerContext
     {
