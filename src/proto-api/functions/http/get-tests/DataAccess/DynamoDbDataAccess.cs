@@ -1,7 +1,7 @@
-using Amazon.DynamoDBv2;
-using Amazon.DynamoDBv2.Model;
+//using Amazon.DynamoDBv2;
+//using Amazon.DynamoDBv2.Model;
 using Milochau.Proto.Shared.Entities;
-using Milochau.Core.Aws.DynamoDB;
+//using Milochau.Core.Aws.DynamoDB;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,13 +21,14 @@ namespace Milochau.Proto.Http.GetTests.DataAccess
     {
         public static string ConventionsPrefix { get; set; } = Environment.GetEnvironmentVariable("CONVENTION__PREFIX")!;
 
+        /*
         private readonly IAmazonDynamoDB amazonDynamoDB;
 
         public DynamoDbDataAccess(IAmazonDynamoDB amazonDynamoDB)
         {
             this.amazonDynamoDB = amazonDynamoDB;
         }
-
+        */
         public async Task<Test> StoreThenFetchTest(GetTestsRequest request, ILambdaLogger logger, CancellationToken cancellationToken)
         {
             // Store
@@ -39,7 +40,7 @@ namespace Milochau.Proto.Http.GetTests.DataAccess
             };
 
             logger.LogInformation($"Putting item... (id: {test.Id})");
-
+            /*
             await amazonDynamoDB.PutItemAsync(new PutItemRequest
             {
                 TableName = $"{ConventionsPrefix}-table-{Test.TableNameSuffix}",
@@ -76,6 +77,9 @@ namespace Milochau.Proto.Http.GetTests.DataAccess
                 Creation = item.ReadDateTimeOffset("creation"),
                 Ttl = item.ReadDateTimeOffset("ttl"),
             };
+            */
+
+            return await Task.FromResult(test);
         }
     }
 }

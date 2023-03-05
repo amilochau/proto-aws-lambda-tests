@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
-using Amazon.DynamoDBv2;
-using Amazon.DynamoDBv2.Model;
+//using Amazon.DynamoDBv2;
+//using Amazon.DynamoDBv2.Model;
 using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
 using Amazon.Lambda.RuntimeSupport;
@@ -32,8 +32,8 @@ namespace Milochau.Proto.Http.GetTests
             {
                 var cancellationToken = CancellationToken.None;
 
-                using var dynamoDBClient = new AmazonDynamoDBClient();
-                var dynamoDbDataAccess = new DynamoDbDataAccess(dynamoDBClient);
+                //using var dynamoDBClient = new AmazonDynamoDBClient();
+                var dynamoDbDataAccess = new DynamoDbDataAccess();// dynamoDBClient);
 
                 return await DoAsync(request, context, dynamoDbDataAccess, cancellationToken);
             }
@@ -63,7 +63,7 @@ namespace Milochau.Proto.Http.GetTests
     [JsonSerializable(typeof(IEnumerable<string>))]
     [JsonSerializable(typeof(GetTestsRequest))]
     [JsonSerializable(typeof(Test))]
-    [JsonSerializable(typeof(GetItemRequest))]
+    //[JsonSerializable(typeof(GetItemRequest))]
     public partial class ApplicationJsonSerializerContext : JsonSerializerContext
     {
     }
