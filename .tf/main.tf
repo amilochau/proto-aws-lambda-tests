@@ -32,26 +32,9 @@ module "checks" {
   conventions = var.conventions
 }
 
-module "emails" {
-  source      = "git::https://github.com/amilochau/tf-modules.git//aws/emails?ref=v1"
-  conventions = var.conventions
-
-  domains = var.emails_settings.domains
-  templates = {
-    for k, v in var.emails_settings.templates : k => {
-      subject = v.subject
-      html    = file("${path.module}${v.html_filepath}")
-      text    = file("${path.module}${v.text_filepath}")
-    }
-  }
-}
-
 module "functions_app" {
   source      = "git::https://github.com/amilochau/tf-modules.git//aws/functions-app?ref=v1"
   conventions = var.conventions
-  depends_on = [
-    module.emails
-  ]
 
   lambda_settings = {
     architecture = "x86_64"
