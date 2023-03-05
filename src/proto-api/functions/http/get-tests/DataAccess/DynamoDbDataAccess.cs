@@ -3,12 +3,9 @@
 using Milochau.Proto.Shared.Entities;
 //using Milochau.Core.Aws.DynamoDB;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Amazon.Lambda.Core;
-using System.Text.Json;
+using Milochau.Proto.Http.GetTests.Internals.Context;
 
 namespace Milochau.Proto.Http.GetTests.DataAccess
 {

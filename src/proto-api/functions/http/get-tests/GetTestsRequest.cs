@@ -1,9 +1,5 @@
 ﻿//using Amazon.Lambda.APIGatewayEvents;
 //using Milochau.Core.Aws.ApiGateway;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
 
 namespace Milochau.Proto.Http.GetTests
 {
