@@ -32,7 +32,7 @@
     <PackageReference Include="Milochau.Core.Aws.DynamoDB" Version="0.1.2-beta.1" />
     
     -->
-    <PackageReference Include="Milochau.Core.Aws.ApiGateway" Version="0.1.2-beta.1" />
+    <PackageReference Include="Milochau.Core.Aws.ApiGateway" Version="0.1.2-beta.2" />
   </ItemGroup>
 
   <ItemGroup>
