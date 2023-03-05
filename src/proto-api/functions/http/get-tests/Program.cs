@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using Amazon.DynamoDBv2;
+using Amazon.DynamoDBv2.Model;
 using Amazon.Lambda.APIGatewayEvents;
 using Amazon.Lambda.Core;
 using Amazon.Lambda.RuntimeSupport;
@@ -51,7 +52,7 @@ namespace Milochau.Proto.Http.GetTests
             }
 
             // Store unsubscribe
-            var test = await dynamoDbDataAccess.StoreThenFetchTest(requestData, cancellationToken);
+            var test = await dynamoDbDataAccess.StoreThenFetchTest(requestData, context.Logger, cancellationToken);
             return HttpResponse.Ok(test, ApplicationJsonSerializerContext.Default.Test);
         }
     }
@@ -62,6 +63,7 @@ namespace Milochau.Proto.Http.GetTests
     [JsonSerializable(typeof(IEnumerable<string>))]
     [JsonSerializable(typeof(GetTestsRequest))]
     [JsonSerializable(typeof(Test))]
+    [JsonSerializable(typeof(GetItemRequest))]
     public partial class ApplicationJsonSerializerContext : JsonSerializerContext
     {
     }
