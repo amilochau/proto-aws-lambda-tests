@@ -13,7 +13,7 @@ using Amazon.Lambda.Serialization.SystemTextJson;
 using Milochau.Proto.Http.GetTests.DataAccess;
 using Milochau.Proto.Shared.Entities;
 
-[assembly: LambdaSerializer(typeof(DefaultLambdaJsonSerializer))]
+//[assembly: LambdaSerializer(typeof(DefaultLambdaJsonSerializer))]
 namespace Milochau.Proto.Http.GetTests
 {
     public class Function
