@@ -42,8 +42,10 @@
     <ProjectReference Include="..\..\..\shared\entities\Milochau.Proto.Shared.Entities.csproj" />
   </ItemGroup>
 
+  <!--
   <ItemGroup>
     <RdXmlFile Include="../../rd.xml" />
   </ItemGroup>
+    -->
 
 </Project>
