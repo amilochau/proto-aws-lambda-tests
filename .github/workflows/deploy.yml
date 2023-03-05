@@ -38,6 +38,6 @@ jobs:
           aws-region: ${{ env.INFRA_AWS_REGION }}
 
       - name: Deploy Terraform module
-        uses: amilochau/github-actions/deploy/terraform@v3
+        uses: amilochau/github-actions/deploy/terraform@amilochau/fix-api-gateway-permission
         with:
           workspaceName: ${{ env.INFRA_WORKSPACE_DEV }}
