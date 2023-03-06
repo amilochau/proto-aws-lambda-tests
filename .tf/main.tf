@@ -33,7 +33,7 @@ module "checks" {
 }
 
 module "functions_app" {
-  source      = "git::https://github.com/amilochau/tf-modules.git//aws/functions-app?ref=v1"
+  source      = "git::https://github.com/amilochau/tf-modules.git//aws/functions-app?ref=amilochau/make-compression-optional"
   conventions = var.conventions
 
   lambda_settings = {
@@ -43,7 +43,6 @@ module "functions_app" {
       for k, v in var.lambda_settings.functions : "${replace(v.function_type, "/", "-")}-${k}" => {
         memory_size_mb              = v.memory_size_mb
         timeout_s                   = v.timeout_s
-        deployment_source_file_path = "${var.lambda_settings.base_directory}/${v.function_type}/${k}/${v.package_source_file}"
         deployment_file_path        = "${var.lambda_settings.base_directory}/${v.function_type}/${k}/${v.package_file}"
         handler                     = v.handler
         environment_variables       = v.environment_variables
