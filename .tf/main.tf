@@ -41,14 +41,14 @@ module "functions_app" {
     runtime      = "provided.al2"
     functions = {
       for k, v in var.lambda_settings.functions : "${replace(v.function_type, "/", "-")}-${k}" => {
-        memory_size_mb              = v.memory_size_mb
-        timeout_s                   = v.timeout_s
-        deployment_file_path        = "${var.lambda_settings.base_directory}/${v.function_type}/${k}/${v.package_file}"
-        handler                     = v.handler
-        environment_variables       = v.environment_variables
-        http_triggers               = v.http_triggers
-        sns_triggers                = v.sns_triggers
-        ses_accesses                = v.ses_accesses
+        memory_size_mb        = v.memory_size_mb
+        timeout_s             = v.timeout_s
+        deployment_file_path  = "${var.lambda_settings.base_directory}/${v.function_type}/${k}/${v.package_file}"
+        handler               = v.handler
+        environment_variables = v.environment_variables
+        http_triggers         = v.http_triggers
+        sns_triggers          = v.sns_triggers
+        ses_accesses          = v.ses_accesses
       }
     }
   }
