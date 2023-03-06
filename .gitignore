@@ -59,6 +59,3 @@ node_modules/
 
 # Terraform
 .terraform
-
-# Distributable files
-dist/

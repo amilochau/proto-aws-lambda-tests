@@ -15,6 +15,7 @@ env:
   INFRA_AWS_REGION: eu-west-3
   PROJECT_API_SOLUTION: './src/proto-api/Milochau.Proto.Functions.sln'
   PROJECT_API_PUBLISH_FILTER: '*/bin/Release/net7.0/linux-x64/publish/bootstrap'
+  PROJECT_CLIENT_WORKSPACE: './src/proto-client'
 
 jobs:
   build_iac:
@@ -36,9 +37,29 @@ jobs:
           solutionPath: ${{ env.PROJECT_API_SOLUTION }}
           publishPathFilter: ${{ env.PROJECT_API_PUBLISH_FILTER }}
 
+  build_client:
+    name: Build (Client)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      # HERE: npm ci, npm run build => /src/proto-client/dist/*
+      #- name: Compress Client distributable files
+      #  shell: pwsh
+      #  run: |
+      #    $compressedFilePath = './output-compressed/${{ env.PROJECT_CLIENT_WORKSPACE }}/app.zip'
+      #    New-Item -Path "./output-compressed" -ItemType Directory | Out-Null
+      #    [System.IO.Compression.ZipFile]::CreateFromDirectory("${{ env.PROJECT_CLIENT_WORKSPACE }}/dist", $compressedFilePath)
+      - name: Upload artifact (compressed)
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-node-compressed
+          path: ${{ env.PROJECT_CLIENT_WORKSPACE }}/dist
+          if-no-files-found: error
+          retention-days: 1
+
   deploy_dev:
     name: Deploy (DEV)
-    needs: [build_iac, build_api]
+    needs: [build_iac, build_api, build_client]
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -50,6 +71,10 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-lambda-functions-compressed
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build-node-compressed
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
