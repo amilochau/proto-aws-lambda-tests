@@ -75,6 +75,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-node-compressed
+          path: ${{ env.PROJECT_CLIENT_WORKSPACE }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
