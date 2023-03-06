@@ -16,8 +16,28 @@ env:
   PROJECT_CLIENT_SOLUTION: './src/proto-api/Milochau.Proto.Functions.sln'
 
 jobs:
+  build_iac:
+    name: Build (IaC)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build and test projects
+        uses: amilochau/github-actions/build/terraform@v3
+
+  build_api:
+    name: Build (API)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build AWS Lambda functions
+        uses: amilochau/github-actions/build/lambda-functions@v3
+        with:
+          solutionPath: ${{ env.PROJECT_CLIENT_SOLUTION }}
+
+
   deploy_dev:
     name: Deploy (DEV)
+    needs: [build_iac, build_api]
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -26,11 +46,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Build AWS Lambda functions
-        uses: amilochau/github-actions/build/lambda-functions@v3
-        with:
-          solutionPath: ${{ env.PROJECT_CLIENT_SOLUTION }}
-          
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1-node16
         with:
