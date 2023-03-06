@@ -88,3 +88,13 @@ jobs:
         uses: amilochau/github-actions/deploy/terraform@v3
         with:
           workspaceName: ${{ env.INFRA_WORKSPACE_DEV }}
+  
+  clean:
+    name: Clean
+    needs: [deploy_dev]
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Clean artifacts
+        uses: amilochau/github-actions/clean/artifacts@amilochau/clean-artifacts
