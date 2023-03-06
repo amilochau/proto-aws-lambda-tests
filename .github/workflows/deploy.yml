@@ -31,7 +31,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build AWS Lambda functions
-        uses: amilochau/github-actions/build/lambda-functions@amilochau/create-artifact-lambda-build
+        uses: amilochau/github-actions/build/lambda-functions@v3
         with:
           solutionPath: ${{ env.PROJECT_API_SOLUTION }}
           publishPathFilter: ${{ env.PROJECT_API_PUBLISH_FILTER }}
