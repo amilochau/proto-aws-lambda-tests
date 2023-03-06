@@ -23,7 +23,7 @@ variable "lambda_settings" {
       memory_size_mb        = optional(number, 128)
       timeout_s             = optional(number, 10)
       package_source_file   = optional(string, "bin/Release/net7.0/linux-x64/publish/bootstrap")
-      package_file          = optional(string, "dist/function.zip")
+      package_file          = optional(string, "bin/Release/net7.0/linux-x64/publish/bootstrap.zip")
       handler               = optional(string, "bootstrap")
       environment_variables = optional(map(string), {})
       http_triggers = optional(list(object({
