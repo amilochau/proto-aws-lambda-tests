@@ -13,7 +13,8 @@ env:
   INFRA_WORKSPACE_DEV: dev
   INFRA_AWS_ROLE: arn:aws:iam::266302224431:role/github-shd-role
   INFRA_AWS_REGION: eu-west-3
-  PROJECT_CLIENT_SOLUTION: './src/proto-api/Milochau.Proto.Functions.sln'
+  PROJECT_API_SOLUTION: './src/proto-api/Milochau.Proto.Functions.sln'
+  PROJECT_API_PUBLISH_FILTER: '*/bin/Release/net7.0/linux-x64/publish/bootstrap'
 
 jobs:
   build_iac:
@@ -30,10 +31,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Build AWS Lambda functions
-        uses: amilochau/github-actions/build/lambda-functions@v3
+        uses: amilochau/github-actions/build/lambda-functions@amilochau/create-artifact-lambda-build
         with:
-          solutionPath: ${{ env.PROJECT_CLIENT_SOLUTION }}
-
+          solutionPath: ${{ env.PROJECT_API_SOLUTION }}
+          publishPathFilter: ${{ env.PROJECT_API_PUBLISH_FILTER }}
 
   deploy_dev:
     name: Deploy (DEV)
