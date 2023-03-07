@@ -1,10 +1,11 @@
-name: Deploy
-run-name: Deploy - ${{ github.ref }}
+name: Clean
+run-name: Clean - ${{ github.ref }}
 
 on:
   workflow_run:
     workflows:
       - Build
+      - Deploy
     types:
       - completed
 
