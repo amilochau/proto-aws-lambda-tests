@@ -22,3 +22,9 @@ jobs:
         uses: amilochau/github-actions/clean/artifacts@amilochau/clean-artifacts
         with:
           runId: ${{ github.event.workflow_run.id }}
+      - name: Log
+        shell: pwsh
+        run: |
+          Write-Output "id: ${{ github.event.workflow_run.id }}"
+          ${{ github.event.workflow_run }}
+          ${{ github.event }}
