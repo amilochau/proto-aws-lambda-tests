@@ -1,0 +1,21 @@
+name: Deploy
+run-name: Deploy - ${{ github.ref }}
+
+on:
+  workflow_run:
+    types:
+      - completed
+
+concurrency: clean
+
+jobs:
+  clean:
+    name: Clean
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Clean artifacts
+        uses: amilochau/github-actions/clean/artifacts@amilochau/clean-artifacts
+        with:
+          runId: ${{ github.event.workflow_run.id }}
