@@ -3,6 +3,8 @@ run-name: Deploy - ${{ github.ref }}
 
 on:
   workflow_run:
+    workflows:
+      - Build
     types:
       - completed
 
