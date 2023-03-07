@@ -1,5 +1,5 @@
 name: Clean
-run-name: Clean - ${{ github.ref }}
+run-name: Clean - ${{ github.event.workflow_run.name }}
 
 on:
   workflow_run:
@@ -8,8 +8,6 @@ on:
       - Deploy
     types:
       - completed
-
-concurrency: clean
 
 jobs:
   clean:
@@ -22,8 +20,3 @@ jobs:
         uses: amilochau/github-actions/clean/artifacts@amilochau/clean-artifacts
         with:
           runId: ${{ github.event.workflow_run.id }}
-      - name: Log
-        shell: pwsh
-        run: |
-          Write-Output "id: ${{ github.event.workflow_run.id }}"
-          Write-Output "name: ${{ github.event.workflow_run.name }}"
