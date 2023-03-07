@@ -26,5 +26,4 @@ jobs:
         shell: pwsh
         run: |
           Write-Output "id: ${{ github.event.workflow_run.id }}"
-          ${{ github.event.workflow_run }} | ConvertFrom-Json
-          ${{ github.event }} | ConvertFrom-Json
+          Write-Output "name: ${{ github.event.workflow_run.name }}"
