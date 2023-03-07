@@ -1,5 +1,5 @@
 name: Clean
-run-name: Clean - ${{ github.event.workflow_run.name }}
+run-name: Clean - ${{ github.event.workflow_run.name }} (${{ github.event.workflow_run.run_number }})
 
 on:
   workflow_run:
