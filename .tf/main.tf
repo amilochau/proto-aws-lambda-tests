@@ -33,7 +33,7 @@ module "checks" {
 }
 
 module "functions_app" {
-  source      = "git::https://github.com/amilochau/tf-modules.git//aws/functions-app?ref=v1"
+  source      = "git::https://github.com/amilochau/tf-modules.git//aws/functions-app"
   conventions = var.conventions
 
   lambda_settings = {
