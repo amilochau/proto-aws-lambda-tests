@@ -6,7 +6,7 @@ namespace Milochau.Proto.Http.GetTests.Internals.Runtime
     public class ExceptionInfo
     {
         [System.Text.Json.Serialization.JsonPropertyName("errorMessage")]
-        public string ErrorMessage { get; set; }
+        public string ErrorMessage { get; set; } = null!;
 
         [System.Text.Json.Serialization.JsonPropertyName("stackTrace")]
         public string? StackTrace { get; set; }
@@ -16,6 +16,11 @@ namespace Milochau.Proto.Http.GetTests.Internals.Runtime
 
         [System.Text.Json.Serialization.JsonPropertyName("causes")]
         public List<ExceptionInfo> InnerExceptions { get; internal set; } = new List<ExceptionInfo>();
+
+        [System.Text.Json.Serialization.JsonConstructor]
+        public ExceptionInfo()
+        {
+        }
 
         public ExceptionInfo(Exception exception)
         {
