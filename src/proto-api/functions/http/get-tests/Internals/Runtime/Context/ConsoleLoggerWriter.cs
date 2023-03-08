@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Milochau.Proto.Http.GetTests.Internals.Context
+namespace Milochau.Proto.Http.GetTests.Internals.Runtime.Context
 {
     public interface IConsoleLoggerWriter
     {
@@ -26,7 +26,7 @@ namespace Milochau.Proto.Http.GetTests.Internals.Context
         /// </summary>
         /// <param name="level"></param>
         /// <param name="message"></param>
-        void FormattedWriteLine(string level, string message);
+        void FormattedWriteLine(LogLevel level, string message);
     }
 
     /// <summary>
@@ -56,20 +56,20 @@ namespace Milochau.Proto.Http.GetTests.Internals.Context
                     var stdOutWriter = FileDescriptorLogFactory.GetWriter(fileDescriptorLogId);
                     var stdErrorWriter = FileDescriptorLogFactory.GetWriter(fileDescriptorLogId);
 
-                    _wrappedStdOutWriter = new WrapperTextWriter(stdOutWriter, LogLevel.Information.ToString());
-                    _wrappedStdErrorWriter = new WrapperTextWriter(stdErrorWriter, LogLevel.Error.ToString());
+                    _wrappedStdOutWriter = new WrapperTextWriter(stdOutWriter, LogLevel.Information);
+                    _wrappedStdErrorWriter = new WrapperTextWriter(stdErrorWriter, LogLevel.Error);
                 }
                 catch (Exception ex)
                 {
-                    InternalLogger.GetDefaultLogger().LogError(ex, "Error creating file descriptor log stream writer. Fallback to stdout and stderr.");
-                    _wrappedStdOutWriter = new WrapperTextWriter(Console.Out, LogLevel.Information.ToString());
-                    _wrappedStdErrorWriter = new WrapperTextWriter(Console.Error, LogLevel.Error.ToString());
+                    Console.WriteLine($"[Error] Error creating file descriptor log stream writer. Fallback to stdout and stderr. - {ex}");
+                    _wrappedStdOutWriter = new WrapperTextWriter(Console.Out, LogLevel.Information);
+                    _wrappedStdErrorWriter = new WrapperTextWriter(Console.Error, LogLevel.Error);
                 }
             }
             else
             {
-                _wrappedStdOutWriter = new WrapperTextWriter(Console.Out, LogLevel.Information.ToString());
-                _wrappedStdErrorWriter = new WrapperTextWriter(Console.Error, LogLevel.Error.ToString());
+                _wrappedStdOutWriter = new WrapperTextWriter(Console.Out, LogLevel.Information);
+                _wrappedStdErrorWriter = new WrapperTextWriter(Console.Error, LogLevel.Error);
             }
 
             // SetOut will wrap our WrapperTextWriter with a synchronized TextWriter. Pass in the new synchronized
@@ -92,7 +92,7 @@ namespace Milochau.Proto.Http.GetTests.Internals.Context
             _wrappedStdOutWriter.FormattedWriteLine(message);
         }
 
-        public void FormattedWriteLine(string? level, string message)
+        public void FormattedWriteLine(LogLevel level, string message)
         {
             _wrappedStdOutWriter.FormattedWriteLine(level, message);
         }
@@ -105,16 +105,15 @@ namespace Milochau.Proto.Http.GetTests.Internals.Context
         class WrapperTextWriter : TextWriter
         {
             private readonly TextWriter _innerWriter;
-            private string _defaultLogLevel;
+            private readonly LogLevel _defaultLogLevel;
 
             const string LOG_LEVEL_ENVIRONMENT_VARIABLE = "AWS_LAMBDA_HANDLER_LOG_LEVEL";
             const string LOG_FORMAT_ENVIRONMENT_VARIABLE = "AWS_LAMBDA_HANDLER_LOG_FORMAT";
 
-            private LogLevel _minmumLogLevel = LogLevel.Information;
+            private readonly LogLevel _minmumLogLevel = LogLevel.Information;
+            private readonly LogFormatType _logFormatType = LogFormatType.Default;
 
             enum LogFormatType { Default, Unformatted }
-
-            private LogFormatType _logFormatType = LogFormatType.Default;
 
             public string CurrentAwsRequestId { get; set; } = string.Empty;
 
@@ -126,7 +125,7 @@ namespace Milochau.Proto.Http.GetTests.Internals.Context
             /// </summary>
             internal object LockObject { get; set; } = new object();
 
-            public WrapperTextWriter(TextWriter innerWriter, string defaultLogLevel)
+            public WrapperTextWriter(TextWriter innerWriter, LogLevel defaultLogLevel)
             {
                 _innerWriter = innerWriter;
                 _defaultLogLevel = defaultLogLevel;
@@ -155,18 +154,12 @@ namespace Milochau.Proto.Http.GetTests.Internals.Context
                 FormattedWriteLine(_defaultLogLevel, message);
             }
 
-            internal void FormattedWriteLine(string? level, string? message)
+            internal void FormattedWriteLine(LogLevel level, string? message)
             {
                 lock (LockObject)
                 {
-                    var displayLevel = level;
-                    if (Enum.TryParse<LogLevel>(level, true, out var levelEnum))
-                    {
-                        if (levelEnum < _minmumLogLevel)
-                            return;
-
-                        displayLevel = ConvertLogLevelToLabel(levelEnum);
-                    }
+                    if (level < _minmumLogLevel)
+                        return;
 
                     if (_logFormatType == LogFormatType.Unformatted)
                     {
@@ -175,6 +168,7 @@ namespace Milochau.Proto.Http.GetTests.Internals.Context
                     else
                     {
                         string line;
+                        var displayLevel = ConvertLogLevelToLabel(level);
                         if (!string.IsNullOrEmpty(displayLevel))
                         {
                             line = $"{DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")}\t{CurrentAwsRequestId}\t{displayLevel}\t{message ?? string.Empty}";

@@ -5,7 +5,7 @@ using System.Collections.Concurrent;
 using System.IO;
 using System.Text;
 
-namespace Milochau.Proto.Http.GetTests.Internals.Context
+namespace Milochau.Proto.Http.GetTests.Internals.Runtime.Context
 {
     /// <summary>
     /// This class wraps the utility of writing to the Lambda telemetry file descriptor for logging into a standard .NET Stream.

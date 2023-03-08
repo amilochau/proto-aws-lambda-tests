@@ -1,9 +1,9 @@
-﻿using Milochau.Proto.Http.GetTests.Internals.Context;
+﻿using Milochau.Proto.Http.GetTests.Internals.Runtime.Context;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Milochau.Proto.Http.GetTests.Internals
+namespace Milochau.Proto.Http.GetTests.Internals.Runtime
 {
     /// <summary>
     /// This class provides methods that help you wrap existing C# Lambda implementations with LambdaBootstrapHandler delegates.

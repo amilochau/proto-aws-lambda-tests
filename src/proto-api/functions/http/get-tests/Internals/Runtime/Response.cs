@@ -2,39 +2,25 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Milochau.Proto.Http.GetTests.Internals
+namespace Milochau.Proto.Http.GetTests.Internals.Runtime
 {
     public class StatusResponse
     {
         public string? Status { get; set; }
     }
 
-    public class ErrorResponse
-    {
-        public string? ErrorMessage { get; set; }
-        public string? ErrorType { get; set; }
-    }
-
-    public class SwaggerResponse
+    public class SwaggerResponse<TResult>
     {
         public int StatusCode { get; private set; }
 
         public Dictionary<string, IEnumerable<string>> Headers { get; private set; }
 
-        public SwaggerResponse(int statusCode, Dictionary<string, IEnumerable<string>> headers)
-        {
-            StatusCode = statusCode;
-            Headers = headers;
-        }
-    }
-
-    public class SwaggerResponse<TResult> : SwaggerResponse
-    {
         public TResult Result { get; private set; }
 
         public SwaggerResponse(int statusCode, Dictionary<string, IEnumerable<string>> headers, TResult result)
-            : base(statusCode, headers)
         {
+            StatusCode = statusCode;
+            Headers = headers;
             Result = result;
         }
     }
@@ -54,10 +40,6 @@ namespace Milochau.Proto.Http.GetTests.Internals
         /// Set this to false if you plan to reuse the same output stream for multiple invocations of the function.
         /// </summary>
         public bool DisposeOutputStream { get; private set; } = true;
-
-        public InvocationResponse(Stream outputStream)
-            : this(outputStream, true)
-        { }
 
         public InvocationResponse(Stream outputStream, bool disposeOutputStream)
         {

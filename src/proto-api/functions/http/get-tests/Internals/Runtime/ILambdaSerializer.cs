@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Milochau.Proto.Http.GetTests.Internals
+namespace Milochau.Proto.Http.GetTests.Internals.Runtime
 {
     /// <summary>
     /// Interface that must be implemented by custom serializers that

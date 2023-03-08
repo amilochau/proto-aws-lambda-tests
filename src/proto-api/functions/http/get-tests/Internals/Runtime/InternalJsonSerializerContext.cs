@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Milochau.Proto.Http.GetTests.Internals
+namespace Milochau.Proto.Http.GetTests.Internals.Runtime
 {
     [JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonSerializable(typeof(ExceptionInfo))]

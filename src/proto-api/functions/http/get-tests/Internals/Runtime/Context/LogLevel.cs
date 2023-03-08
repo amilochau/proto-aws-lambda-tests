@@ -1,4 +1,4 @@
-﻿namespace Milochau.Proto.Http.GetTests.Internals.Context
+﻿namespace Milochau.Proto.Http.GetTests.Internals.Runtime.Context
 {
     public enum LogLevel
     {

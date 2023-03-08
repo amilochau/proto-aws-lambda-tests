@@ -2,7 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Milochau.Proto.Http.GetTests.Internals
+namespace Milochau.Proto.Http.GetTests.Internals.Runtime
 {
     public delegate Task<InvocationResponse> LambdaBootstrapHandler(InvocationRequest invocation);
     public delegate Task<bool> LambdaBootstrapInitializer();
@@ -56,5 +56,4 @@ namespace Milochau.Proto.Http.GetTests.Internals
             }
         }
     }
-
 }

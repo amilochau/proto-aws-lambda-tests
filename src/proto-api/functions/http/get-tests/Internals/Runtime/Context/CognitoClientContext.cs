@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.Json;
 
-namespace Milochau.Proto.Http.GetTests.Internals.Context
+namespace Milochau.Proto.Http.GetTests.Internals.Runtime.Context
 {
     internal class CognitoClientContext : IClientContext
     {

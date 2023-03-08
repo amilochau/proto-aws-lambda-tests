@@ -1,11 +1,11 @@
-﻿using Milochau.Proto.Http.GetTests.Internals.Context;
+﻿using Milochau.Proto.Http.GetTests.Internals.Runtime.Context;
 using System;
 using System.IO;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Milochau.Proto.Http.GetTests.Internals
+namespace Milochau.Proto.Http.GetTests.Internals.Runtime
 {
     public class RuntimeApiClient
     {

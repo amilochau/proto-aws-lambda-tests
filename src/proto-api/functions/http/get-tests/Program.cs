@@ -9,7 +9,7 @@ using Milochau.Core.Aws.ApiGateway.APIGatewayEvents;
 //using Amazon.DynamoDBv2;
 //using Amazon.DynamoDBv2.Model;
 using Milochau.Proto.Http.GetTests.DataAccess;
-using Milochau.Proto.Http.GetTests.Internals;
+using Milochau.Proto.Http.GetTests.Internals.Runtime;
 using Milochau.Proto.Shared.Entities;
 
 namespace Milochau.Proto.Http.GetTests
@@ -28,7 +28,7 @@ namespace Milochau.Proto.Http.GetTests
             await lambdaBootstrap.RunAsync();
         }
 
-        public static async Task<APIGatewayHttpApiV2ProxyResponse> FunctionHandler(APIGatewayHttpApiV2ProxyRequest? request, Internals.Context.ILambdaContext context)
+        public static async Task<APIGatewayHttpApiV2ProxyResponse> FunctionHandler(APIGatewayHttpApiV2ProxyRequest? request, Internals.Runtime.Context.ILambdaContext context)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace Milochau.Proto.Http.GetTests
             }
         }
 
-        public static async Task<APIGatewayHttpApiV2ProxyResponse> DoAsync(APIGatewayHttpApiV2ProxyRequest request, Internals.Context.ILambdaContext context, IDynamoDbDataAccess dynamoDbDataAccess, CancellationToken cancellationToken)
+        public static async Task<APIGatewayHttpApiV2ProxyResponse> DoAsync(APIGatewayHttpApiV2ProxyRequest request, Internals.Runtime.Context.ILambdaContext context, IDynamoDbDataAccess dynamoDbDataAccess, CancellationToken cancellationToken)
         {
             /*if (!request.TryParseAndValidate<GetTestsRequest>(new ValidationOptions { AuthenticationRequired = false }, out var proxyResponse, out var requestData))
             {

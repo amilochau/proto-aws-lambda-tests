@@ -25,6 +25,8 @@
     <MetadataUpdaterSupport>false</MetadataUpdaterSupport>
     <UseNativeHttpHandler>true</UseNativeHttpHandler>
     <UseSystemResourceKeys>true</UseSystemResourceKeys>
+    
+    <!--<Deterministic>true</Deterministic>-->
   </PropertyGroup>
 
   <ItemGroup>

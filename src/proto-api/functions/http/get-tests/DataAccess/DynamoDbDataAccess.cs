@@ -5,7 +5,7 @@ using Milochau.Proto.Shared.Entities;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Milochau.Proto.Http.GetTests.Internals.Context;
+using Milochau.Proto.Http.GetTests.Internals.Runtime.Context;
 
 namespace Milochau.Proto.Http.GetTests.DataAccess
 {

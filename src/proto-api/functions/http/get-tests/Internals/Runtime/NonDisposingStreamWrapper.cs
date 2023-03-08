@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Milochau.Proto.Http.GetTests.Internals
+namespace Milochau.Proto.Http.GetTests.Internals.Runtime
 {
     /// <summary>
     /// This class is used to wrap the function response stream.

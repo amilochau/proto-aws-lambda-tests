@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Milochau.Proto.Http.GetTests.Internals.Context
+namespace Milochau.Proto.Http.GetTests.Internals.Runtime.Context
 {
     internal class LambdaConsoleLogger : ILambdaLogger
     {
@@ -21,9 +21,7 @@ namespace Milochau.Proto.Http.GetTests.Internals.Context
             _consoleLoggerRedirector.FormattedWriteLine(message);
         }
 
-        public string? CurrentAwsRequestId { get; set; }
-
-        public void Log(string level, string message)
+        public void Log(LogLevel level, string message)
         {
             _consoleLoggerRedirector.FormattedWriteLine(level, message);
         }

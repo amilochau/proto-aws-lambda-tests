@@ -1,8 +1,8 @@
-﻿using Milochau.Proto.Http.GetTests.Internals.Context;
+﻿using Milochau.Proto.Http.GetTests.Internals.Runtime.Context;
 using System;
 using System.IO;
 
-namespace Milochau.Proto.Http.GetTests.Internals
+namespace Milochau.Proto.Http.GetTests.Internals.Runtime
 {
     public class InvocationRequest : IDisposable
     {
