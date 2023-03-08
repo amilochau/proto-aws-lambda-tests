@@ -4,6 +4,8 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using Milochau.Core.Aws.ApiGateway;
+using Milochau.Core.Aws.ApiGateway.APIGatewayEvents;
 //using Amazon.DynamoDBv2;
 //using Amazon.DynamoDBv2.Model;
 using Milochau.Proto.Http.GetTests.DataAccess;
