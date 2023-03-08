@@ -12,8 +12,9 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <PublishAot>true</PublishAot>
     <StripSymbols>true</StripSymbols>
-    <IlcDisableReflection>true</IlcDisableReflection>
-
+    
+    <IlcOptimizationPreference>Size</IlcOptimizationPreference>
+    
     <AutoreleasePoolSupport>false</AutoreleasePoolSupport>
     <DebuggerSupport>false</DebuggerSupport>
     <EnableUnsafeBinaryFormatterSerialization>false</EnableUnsafeBinaryFormatterSerialization>
