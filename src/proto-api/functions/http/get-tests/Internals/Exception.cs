@@ -1,70 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 
 namespace Milochau.Proto.Http.GetTests.Internals
 {
-    public class StackFrameInfo
-    {
-        public StackFrameInfo(StackFrame stackFrame)
-        {
-            Path = stackFrame.GetFileName();
-            Line = stackFrame.GetFileLineNumber();
-        }
-
-        public string? Path { get; }
-        public int Line { get; }
-    }
-
     public class ExceptionInfo
     {
+        [System.Text.Json.Serialization.JsonPropertyName("errorMessage")]
         public string ErrorMessage { get; set; }
-        public string ErrorType { get; set; }
-        public StackFrameInfo[]? StackFrames { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("stackTrace")]
         public string? StackTrace { get; set; }
 
+        [System.Text.Json.Serialization.JsonPropertyName("cause")]
         public ExceptionInfo? InnerException { get; set; }
+
+        [System.Text.Json.Serialization.JsonPropertyName("causes")]
         public List<ExceptionInfo> InnerExceptions { get; internal set; } = new List<ExceptionInfo>();
 
-        public ExceptionInfo(Exception exception, bool isNestedException = false)
+        public ExceptionInfo(Exception exception)
         {
-            ErrorType = exception.GetType().Name;
             ErrorMessage = exception.Message;
-
-            if (!string.IsNullOrEmpty(exception.StackTrace))
-            {
-                StackTrace stackTrace = new StackTrace(exception, true);
-                StackTrace = stackTrace.ToString();
-
-                // Only extract the stack frames like this for the top-level exception
-                // This is used for Xray Exception serialization
-                if (isNestedException || stackTrace?.GetFrames() == null)
-                {
-                    StackFrames = new StackFrameInfo[0];
-                }
-                else
-                {
-                    StackFrames = (
-                        from sf in stackTrace.GetFrames()
-                        where sf != null
-                        select new StackFrameInfo(sf)
-                    ).ToArray();
-                }
-            }
+            StackTrace = exception.StackTrace;
 
             if (exception.InnerException != null)
             {
-                InnerException = new ExceptionInfo(exception.InnerException, true);
+                InnerException = new ExceptionInfo(exception.InnerException);
             }
 
             AggregateException? aggregateException = exception as AggregateException;
 
             if (aggregateException != null && aggregateException.InnerExceptions != null)
             {
-                foreach (var innerEx in aggregateException.InnerExceptions)
+                foreach (var innerException in aggregateException.InnerExceptions)
                 {
-                    InnerExceptions.Add(new ExceptionInfo(innerEx, true));
+                    InnerExceptions.Add(new ExceptionInfo(innerException));
                 }
             }
         }

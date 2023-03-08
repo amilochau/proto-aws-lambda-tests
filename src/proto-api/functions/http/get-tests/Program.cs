@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -7,8 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 //using Amazon.DynamoDBv2;
 //using Amazon.DynamoDBv2.Model;
-using Milochau.Core.Aws.ApiGateway;
-using Milochau.Core.Aws.ApiGateway.APIGatewayEvents;
 using Milochau.Proto.Http.GetTests.DataAccess;
 using Milochau.Proto.Http.GetTests.Internals;
 using Milochau.Proto.Shared.Entities;
@@ -69,14 +66,8 @@ namespace Milochau.Proto.Http.GetTests
     [JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase, DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull)]
     [JsonSerializable(typeof(APIGatewayHttpApiV2ProxyRequest))]
     [JsonSerializable(typeof(APIGatewayHttpApiV2ProxyResponse))]
-    [JsonSerializable(typeof(IEnumerable<string>))]
     [JsonSerializable(typeof(GetTestsRequest))]
     [JsonSerializable(typeof(Test))]
-    [JsonSerializable(typeof(string))]
-    [JsonSerializable(typeof(Exception))]
-    [JsonSerializable(typeof(ErrorResponse))]
-    [JsonSerializable(typeof(StatusResponse))]
-    //[JsonSerializable(typeof(GetItemRequest))]
     public partial class ApplicationJsonSerializerContext : JsonSerializerContext
     {
     }

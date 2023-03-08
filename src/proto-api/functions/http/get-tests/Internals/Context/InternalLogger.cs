@@ -31,7 +31,7 @@ namespace Milochau.Proto.Http.GetTests.Internals.Context
 
         public void LogError(Exception exception, string message)
         {
-            _internalLoggingAction($"[Error] {message} - {exception.ToString()}");
+            _internalLoggingAction($"[Error] {message} - {exception}");
         }
 
         public void LogInformation(string message)

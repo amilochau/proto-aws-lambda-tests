@@ -32,9 +32,9 @@ namespace Milochau.Proto.Http.GetTests.Internals
         {
             var exceptionInfo = new ExceptionInfo(exception);
 
-            string exceptionInfoJson = JsonSerializer.Serialize(exception, ApplicationJsonSerializerContext.Default.Exception);
+            string exceptionInfoJson = JsonSerializer.Serialize(exceptionInfo, InternalJsonSerializerContext.Default.ExceptionInfo);
 
-            return internalClient.ErrorWithXRayCauseAsync(awsRequestId, exceptionInfo.ErrorType, exceptionInfoJson);
+            return internalClient.ErrorWithXRayCauseAsync(awsRequestId, exceptionInfoJson);
         }
 
         public async Task SendResponseAsync(string awsRequestId, Stream? outputStream)

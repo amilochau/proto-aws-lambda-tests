@@ -54,14 +54,11 @@ namespace Milochau.Proto.Http.GetTests.Internals
             return new SwaggerResponse<System.IO.Stream?>((int)response.StatusCode, headers, new System.IO.MemoryStream(0));
         }
 
-        public async Task<SwaggerResponse<StatusResponse?>> ErrorWithXRayCauseAsync(string awsRequestId, string lambda_Runtime_Function_Error_Type, string errorJson)
+        public async Task<SwaggerResponse<StatusResponse?>> ErrorWithXRayCauseAsync(string awsRequestId, string errorJson)
         {
             var urlBuilder = new System.Text.StringBuilder().Append(baseUrl).Append("/runtime/invocation/{AwsRequestId}/error").Replace("{AwsRequestId}", Uri.EscapeDataString(awsRequestId));
 
             using var request = new HttpRequestMessage();
-            if (lambda_Runtime_Function_Error_Type != null)
-                request.Headers.TryAddWithoutValidation("Lambda-Runtime-Function-Error-Type", lambda_Runtime_Function_Error_Type);
-
             using var content = new StringContent(errorJson);
             content.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/vnd.aws.lambda.error+json");
             request.Content = content;
@@ -85,7 +82,7 @@ namespace Milochau.Proto.Http.GetTests.Internals
                 if (response.Content != null)
                 {
                     responseData = await response.Content.ReadAsStringAsync();
-                    result = JsonSerializer.Deserialize(responseData, ApplicationJsonSerializerContext.Default.StatusResponse);
+                    result = JsonSerializer.Deserialize(responseData, InternalJsonSerializerContext.Default.StatusResponse);
                 }
                 try
                 {
@@ -141,6 +138,5 @@ namespace Milochau.Proto.Http.GetTests.Internals
 
             return new SwaggerResponse<StatusResponse?>((int)response.StatusCode, headers, default);
         }
-
     }
 }
